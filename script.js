@@ -2,7 +2,6 @@
   const canvas = document.getElementById('forca');
   const ctx = canvas.getContext('2d');
 
-  // Agora o array tem objetos com palavra e categoria
   const palavras = [
     { palavra: 'JAVASCRIPT', categoria: 'Linguagem de Programação' },
     { palavra: 'HTML', categoria: 'Linguagem de Marcação' },
@@ -71,12 +70,14 @@
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    // Base
     ctx.beginPath();
     ctx.moveTo(10, 290);
     ctx.lineTo(240, 290);
     ctx.stroke();
 
     if (letrasErradas.length > 0) {
+      // Poste vertical
       ctx.beginPath();
       ctx.moveTo(50, 290);
       ctx.lineTo(50, 20);
@@ -84,6 +85,7 @@
     }
 
     if (letrasErradas.length > 1) {
+      // Poste horizontal
       ctx.beginPath();
       ctx.moveTo(50, 20);
       ctx.lineTo(180, 20);
@@ -91,6 +93,7 @@
     }
 
     if (letrasErradas.length > 2) {
+      // Corda
       ctx.beginPath();
       ctx.moveTo(180, 20);
       ctx.lineTo(180, 50);
@@ -98,12 +101,14 @@
     }
 
     if (letrasErradas.length > 3) {
+      // Cabeça
       ctx.beginPath();
       ctx.arc(180, 75, 25, 0, Math.PI * 2);
       ctx.stroke();
     }
 
     if (letrasErradas.length > 4) {
+      // Corpo
       ctx.beginPath();
       ctx.moveTo(180, 100);
       ctx.lineTo(180, 180);
@@ -111,6 +116,7 @@
     }
 
     if (letrasErradas.length > 5) {
+      // Braços
       ctx.beginPath();
       ctx.moveTo(180, 120);
       ctx.lineTo(150, 160);
