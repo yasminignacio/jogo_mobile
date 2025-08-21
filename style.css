@@ -104,3 +104,12 @@ h1 {
 #btn-reiniciar:hover {
   background-color: #0c0;
 }
+
+.dica {
+  color: #0f0;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  font-style: italic;
+  text-shadow: 0 0 5px #0f0;
+  user-select: none;
+}
