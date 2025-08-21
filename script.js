@@ -2,6 +2,7 @@
   const canvas = document.getElementById('forca');
   const ctx = canvas.getContext('2d');
 
+  // Palavras com categorias, mais variadas para evitar repetições
   const palavras = [
     { palavra: 'JAVASCRIPT', categoria: 'Linguagem de Programação' },
     { palavra: 'HTML', categoria: 'Linguagem de Marcação' },
@@ -22,7 +23,18 @@
     { palavra: 'DOM', categoria: 'Conceito' },
     { palavra: 'DEBUG', categoria: 'Ação' },
     { palavra: 'INTERFACE', categoria: 'Conceito' },
-    { palavra: 'CLASSE', categoria: 'Conceito' }
+    { palavra: 'CLASSE', categoria: 'Conceito' },
+
+    // Adicionando palavras novas para variedade
+    { palavra: 'ELEFANTE', categoria: 'Animal' },
+    { palavra: 'MONTANHA', categoria: 'Natureza' },
+    { palavra: 'TECLADO', categoria: 'Objeto' },
+    { palavra: 'ESTRELA', categoria: 'Natureza' },
+    { palavra: 'GUITARRA', categoria: 'Objeto' },
+    { palavra: 'PIZZA', categoria: 'Comida' },
+    { palavra: 'CAMISA', categoria: 'Objeto' },
+    { palavra: 'FUTEBOL', categoria: 'Esporte' },
+    { palavra: 'CACHORRO', categoria: 'Animal' },
   ];
 
   let palavraSecreta = '';
@@ -37,6 +49,85 @@
   const dicaEl = document.getElementById('dica');
 
   const maxErros = 6;
+
+  // Desenha a base da forca que não muda
+  function desenharBaseForca() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = '#0f0';
+
+    // Chão
+    ctx.beginPath();
+    ctx.moveTo(10, 290);
+    ctx.lineTo(240, 290);
+    ctx.stroke();
+
+    // Poste vertical
+    ctx.beginPath();
+    ctx.moveTo(50, 290);
+    ctx.lineTo(50, 20);
+    ctx.stroke();
+
+    // Poste horizontal
+    ctx.beginPath();
+    ctx.moveTo(50, 20);
+    ctx.lineTo(180, 20);
+    ctx.stroke();
+
+    // Corda
+    ctx.beginPath();
+    ctx.moveTo(180, 20);
+    ctx.lineTo(180, 50);
+    ctx.stroke();
+  }
+
+  // Desenha o boneco conforme os erros
+  function desenharBoneco(erros) {
+    ctx.strokeStyle = '#0f0';
+    ctx.lineWidth = 3;
+
+    if (erros > 0) {
+      // Cabeça
+      ctx.beginPath();
+      ctx.arc(180, 75, 25, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+    if (erros > 1) {
+      // Tronco
+      ctx.beginPath();
+      ctx.moveTo(180, 100);
+      ctx.lineTo(180, 180);
+      ctx.stroke();
+    }
+    if (erros > 2) {
+      // Braço esquerdo
+      ctx.beginPath();
+      ctx.moveTo(180, 120);
+      ctx.lineTo(150, 160);
+      ctx.stroke();
+    }
+    if (erros > 3) {
+      // Braço direito
+      ctx.beginPath();
+      ctx.moveTo(180, 120);
+      ctx.lineTo(210, 160);
+      ctx.stroke();
+    }
+    if (erros > 4) {
+      // Perna esquerda
+      ctx.beginPath();
+      ctx.moveTo(180, 180);
+      ctx.lineTo(150, 230);
+      ctx.stroke();
+    }
+    if (erros > 5) {
+      // Perna direita
+      ctx.beginPath();
+      ctx.moveTo(180, 180);
+      ctx.lineTo(210, 230);
+      ctx.stroke();
+    }
+  }
 
   function escolherPalavra() {
     const index = Math.floor(Math.random() * palavras.length);
@@ -64,69 +155,9 @@
     }
   }
 
-  function desenharForca() {
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = '#0f0';
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Base
-    ctx.beginPath();
-    ctx.moveTo(10, 290);
-    ctx.lineTo(240, 290);
-    ctx.stroke();
-
-    if (letrasErradas.length > 0) {
-      // Poste vertical
-      ctx.beginPath();
-      ctx.moveTo(50, 290);
-      ctx.lineTo(50, 20);
-      ctx.stroke();
-    }
-
-    if (letrasErradas.length > 1) {
-      // Poste horizontal
-      ctx.beginPath();
-      ctx.moveTo(50, 20);
-      ctx.lineTo(180, 20);
-      ctx.stroke();
-    }
-
-    if (letrasErradas.length > 2) {
-      // Corda
-      ctx.beginPath();
-      ctx.moveTo(180, 20);
-      ctx.lineTo(180, 50);
-      ctx.stroke();
-    }
-
-    if (letrasErradas.length > 3) {
-      // Cabeça
-      ctx.beginPath();
-      ctx.arc(180, 75, 25, 0, Math.PI * 2);
-      ctx.stroke();
-    }
-
-    if (letrasErradas.length > 4) {
-      // Corpo
-      ctx.beginPath();
-      ctx.moveTo(180, 100);
-      ctx.lineTo(180, 180);
-      ctx.stroke();
-    }
-
-    if (letrasErradas.length > 5) {
-      // Braços
-      ctx.beginPath();
-      ctx.moveTo(180, 120);
-      ctx.lineTo(150, 160);
-      ctx.moveTo(180, 120);
-      ctx.lineTo(210, 160);
-      ctx.stroke();
-    }
-  }
-
   function chute(letra, btn) {
+    if (btn.disabled) return; // evita duplo clique rápido
+
     btn.disabled = true;
 
     if (palavraSecreta.includes(letra)) {
@@ -135,7 +166,8 @@
       verificarVitoria();
     } else {
       letrasErradas.push(letra);
-      desenharForca();
+      desenharBaseForca();  // sempre desenha a base
+      desenharBoneco(letrasErradas.length);
       verificarDerrota();
     }
   }
@@ -181,6 +213,8 @@
 
   function onKeydown(e) {
     const letra = e.key.toUpperCase();
+    if (!/^[A-Z]$/.test(letra)) return; // Só letras A-Z
+
     const botoes = letrasContainer.querySelectorAll('button');
     botoes.forEach(btn => {
       if (btn.textContent === letra && !btn.disabled) {
@@ -199,7 +233,7 @@
     dicaEl.textContent = `Dica: ${categoriaSecreta}`;
     mostrarPalavra();
     criarLetras();
-    desenharForca();
+    desenharBaseForca(); // já desenha a forca
     bloquearTeclado(false);
   }
 
@@ -208,3 +242,4 @@
   // Inicializa o jogo
   reiniciar();
 })();
+
