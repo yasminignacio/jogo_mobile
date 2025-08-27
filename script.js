@@ -162,9 +162,13 @@
     }
   }
 
+  // Função para normalizar e remover acentos
+  function normalizarTexto(texto) {
+    return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+
   function escolherPalavra() {
     if (palavrasDisponiveis.length === 0) {
-      // Se todas as palavras foram usadas, reinicia a lista
       palavrasDisponiveis = [...palavras];
       embaralharPalavras();
     }
@@ -199,7 +203,10 @@
 
     btn.disabled = true;
 
-    if (palavraSecreta.includes(letra)) {
+    // Normaliza a letra antes de comparar
+    const letraNormalizada = normalizarTexto(letra);
+
+    if (palavraSecreta.split('').some(l => normalizarTexto(l) === letraNormalizada)) {
       letrasCorretas.push(letra);
       mostrarPalavra();
       verificarVitoria();
