@@ -2,71 +2,78 @@
   const canvas = document.getElementById('forca');
   const ctx = canvas.getContext('2d');
 
-  // Palavras com categorias, mais variadas para evitar repetições
-  
-const palavras = [
-  { palavra: 'JAVASCRIPT', categoria: 'Linguagem de Programação' },
-  { palavra: 'HTML', categoria: 'Linguagem de Marcação' },
-  { palavra: 'CSS', categoria: 'Linguagem de Estilo' },
-  { palavra: 'PYTHON', categoria: 'Linguagem de Programação' },
-  { palavra: 'JAVA', categoria: 'Linguagem de Programação' },
-  { palavra: 'ALGORITMO', categoria: 'Conceito' },
-  { palavra: 'FUNCAO', categoria: 'Conceito' },
-  { palavra: 'ARRAY', categoria: 'Estrutura de Dados' },
-  { palavra: 'SUPORTE', categoria: 'Tecnologia' },
-  { palavra: 'GUITARRA', categoria: 'Objeto' },
-  { palavra: 'LIVRO', categoria: 'Objeto' },
-  { palavra: 'MOCHILA', categoria: 'Objeto' },
-  { palavra: 'JARDIM', categoria: 'Natureza' },
-  { palavra: 'TORNEIO', categoria: 'Evento' },
-  { palavra: 'MAR', categoria: 'Natureza' },
-  { palavra: 'CACHORRO', categoria: 'Animal' },
-  { palavra: 'GATO', categoria: 'Animal' },
-  { palavra: 'PIZZA', categoria: 'Comida' },
-  { palavra: 'BATATA', categoria: 'Comida' },
-  { palavra: 'CINEMA', categoria: 'Entretenimento' },
-  { palavra: 'FUTEBOL', categoria: 'Esporte' },
-  { palavra: 'VÔLEI', categoria: 'Esporte' },
-  { palavra: 'CAMISA', categoria: 'Roupas' },
-  { palavra: 'CASACO', categoria: 'Roupas' },
-  { palavra: 'ESPELHO', categoria: 'Objeto' },
-  { palavra: 'MONTANHA', categoria: 'Natureza' },
-  { palavra: 'SELVA', categoria: 'Natureza' },
-  { palavra: 'MELANCIA', categoria: 'Fruta' },
-  { palavra: 'UVA', categoria: 'Fruta' },
-  { palavra: 'PARQUE', categoria: 'Lugar' },
-  { palavra: 'PLANO', categoria: 'Conceito' },
-  { palavra: 'CIDADE', categoria: 'Lugar' },
-  { palavra: 'MUSEU', categoria: 'Lugar' },
-  { palavra: 'MOTOR', categoria: 'Objeto' },
-  { palavra: 'NAVE', categoria: 'Veículo' },
-  { palavra: 'CAMPEONATO', categoria: 'Esporte' },
-  { palavra: 'CARRINHO', categoria: 'Objeto' },
-  { palavra: 'ANIMAL', categoria: 'Animal' },
-  { palavra: 'PAPEL', categoria: 'Objeto' },
-  { palavra: 'VELA', categoria: 'Objeto' },
-  { palavra: 'REMEDIO', categoria: 'Produto' },
-  { palavra: 'BICICLETA', categoria: 'Veículo' },
-  { palavra: 'ROBOT', categoria: 'Tecnologia' },
-  { palavra: 'ROQUE', categoria: 'Jogo' },
-  { palavra: 'ESTRELA', categoria: 'Natureza' },
-  { palavra: 'CIELO', categoria: 'Natureza' },
-  { palavra: 'LUZ', categoria: 'Natureza' },
-  { palavra: 'FERRARI', categoria: 'Marca' },
-  { palavra: 'OASIS', categoria: 'Lugar' },
-  { palavra: 'ARCO', categoria: 'Objeto' },
-  { palavra: 'TIJOLO', categoria: 'Material' },
-  { palavra: 'FÁBRICA', categoria: 'Lugar' },
-  { palavra: 'TELEVISÃO', categoria: 'Tecnologia' },
-  { palavra: 'ROCK', categoria: 'Música' },
-  { palavra: 'CLUBE', categoria: 'Lugar' },
-];
+  // Lista de palavras variadas
+  let palavras = [
+    { palavra: 'JAVASCRIPT', categoria: 'Linguagem de Programação' },
+    { palavra: 'HTML', categoria: 'Linguagem de Marcação' },
+    { palavra: 'CSS', categoria: 'Linguagem de Estilo' },
+    { palavra: 'PYTHON', categoria: 'Linguagem de Programação' },
+    { palavra: 'JAVA', categoria: 'Linguagem de Programação' },
+    { palavra: 'ALGORITMO', categoria: 'Conceito' },
+    { palavra: 'FUNCAO', categoria: 'Conceito' },
+    { palavra: 'ARRAY', categoria: 'Estrutura de Dados' },
+    { palavra: 'SUPORTE', categoria: 'Tecnologia' },
+    { palavra: 'GUITARRA', categoria: 'Objeto' },
+    { palavra: 'LIVRO', categoria: 'Objeto' },
+    { palavra: 'MOCHILA', categoria: 'Objeto' },
+    { palavra: 'JARDIM', categoria: 'Natureza' },
+    { palavra: 'TORNEIO', categoria: 'Evento' },
+    { palavra: 'MAR', categoria: 'Natureza' },
+    { palavra: 'CACHORRO', categoria: 'Animal' },
+    { palavra: 'GATO', categoria: 'Animal' },
+    { palavra: 'PIZZA', categoria: 'Comida' },
+    { palavra: 'BATATA', categoria: 'Comida' },
+    { palavra: 'CINEMA', categoria: 'Entretenimento' },
+    { palavra: 'FUTEBOL', categoria: 'Esporte' },
+    { palavra: 'VÔLEI', categoria: 'Esporte' },
+    { palavra: 'CAMISA', categoria: 'Roupas' },
+    { palavra: 'CASACO', categoria: 'Roupas' },
+    { palavra: 'ESPELHO', categoria: 'Objeto' },
+    { palavra: 'MONTANHA', categoria: 'Natureza' },
+    { palavra: 'SELVA', categoria: 'Natureza' },
+    { palavra: 'MELANCIA', categoria: 'Fruta' },
+    { palavra: 'UVA', categoria: 'Fruta' },
+    { palavra: 'PARQUE', categoria: 'Lugar' },
+    { palavra: 'PLANO', categoria: 'Conceito' },
+    { palavra: 'CIDADE', categoria: 'Lugar' },
+    { palavra: 'MUSEU', categoria: 'Lugar' },
+    { palavra: 'MOTOR', categoria: 'Objeto' },
+    { palavra: 'NAVE', categoria: 'Veículo' },
+    { palavra: 'CAMPEONATO', categoria: 'Esporte' },
+    { palavra: 'CARRINHO', categoria: 'Objeto' },
+    { palavra: 'ANIMAL', categoria: 'Animal' },
+    { palavra: 'PAPEL', categoria: 'Objeto' },
+    { palavra: 'VELA', categoria: 'Objeto' },
+    { palavra: 'REMEDIO', categoria: 'Produto' },
+    { palavra: 'BICICLETA', categoria: 'Veículo' },
+    { palavra: 'ROBOT', categoria: 'Tecnologia' },
+    { palavra: 'ROQUE', categoria: 'Jogo' },
+    { palavra: 'ESTRELA', categoria: 'Natureza' },
+    { palavra: 'CIELO', categoria: 'Natureza' },
+    { palavra: 'LUZ', categoria: 'Natureza' },
+    { palavra: 'FERRARI', categoria: 'Marca' },
+    { palavra: 'OASIS', categoria: 'Lugar' },
+    { palavra: 'ARCO', categoria: 'Objeto' },
+    { palavra: 'TIJOLO', categoria: 'Material' },
+    { palavra: 'FÁBRICA', categoria: 'Lugar' },
+    { palavra: 'TELEVISÃO', categoria: 'Tecnologia' },
+    { palavra: 'ROCK', categoria: 'Música' },
+    { palavra: 'CLUBE', categoria: 'Lugar' },
+  ];
 
+  // Embaralha as palavras para evitar repetições consecutivas
+  function embaralharPalavras() {
+    for (let i = palavras.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [palavras[i], palavras[j]] = [palavras[j], palavras[i]];
+    }
+  }
 
   let palavraSecreta = '';
   let categoriaSecreta = '';
   let letrasCorretas = [];
   let letrasErradas = [];
+  let palavrasDisponiveis = [...palavras]; // Cópia das palavras
 
   const palavraEl = document.getElementById('palavra');
   const letrasContainer = document.getElementById('letras-container');
@@ -156,8 +163,14 @@ const palavras = [
   }
 
   function escolherPalavra() {
-    const index = Math.floor(Math.random() * palavras.length);
-    return palavras[index];
+    if (palavrasDisponiveis.length === 0) {
+      // Se todas as palavras foram usadas, reinicia a lista
+      palavrasDisponiveis = [...palavras];
+      embaralharPalavras();
+    }
+
+    const escolhido = palavrasDisponiveis.pop();
+    return escolhido;
   }
 
   function mostrarPalavra() {
@@ -266,6 +279,6 @@ const palavras = [
   btnReiniciar.addEventListener('click', reiniciar);
 
   // Inicializa o jogo
+  embaralharPalavras();
   reiniciar();
 })();
-
