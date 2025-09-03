@@ -211,46 +211,68 @@
       verificarVitoria();
     } else {
       letrasErradas.push(letra);
+      desenharBaseForca();  // sempre desenha a base
       desenharBoneco(letrasErradas.length);
       verificarDerrota();
     }
   }
 
   function verificarVitoria() {
-    if (palavraSecreta.split('').every(l => letrasCorretas.includes(normalizarTexto(l)))) {
-      statusEl.textContent = 'Você Venceu!';
+    const ganhou = palavraSecreta.split('').every(letra => letrasCorretas.includes(letra));
+    if (ganhou) {
+      statusEl.textContent = '🎉 Você ganhou!';
+      bloquearBotoes(true);
     }
   }
 
   function verificarDerrota() {
     if (letrasErradas.length >= maxErros) {
-      statusEl.textContent = 'Você Perdeu!';
+      statusEl.textContent = `💀 Você perdeu! A palavra era: ${palavraSecreta}`;
+      mostrarPalavraCompleta();
+      bloquearBotoes(true);
+    } else {
+      statusEl.textContent = `Erros: ${letrasErradas.length} de ${maxErros}`;
     }
   }
 
-  function reiniciarJogo() {
+  function mostrarPalavraCompleta() {
+    palavraEl.textContent = palavraSecreta.split('').join(' ');
+  }
+
+  function bloquearBotoes(bloquear) {
+    const botoes = letrasContainer.querySelectorAll('button');
+    botoes.forEach(btn => {
+      btn.disabled = bloquear;
+    });
+  }
+
+  function reiniciar() {
+    const escolhido = escolherPalavra();
+    palavraSecreta = escolhido.palavra;
+    categoriaSecreta = escolhido.categoria;
     letrasCorretas = [];
     letrasErradas = [];
-    escolherNovaPalavra();
-    criarLetras();
-    desenharBaseForca();
-    mostrarPalavra();
     statusEl.textContent = '';
-    dicaEl.textContent = `Categoria: ${categoriaSecreta}`;
+    dicaEl.textContent = `Dica: ${categoriaSecreta}`;
+    mostrarPalavra();
+    criarLetras();
+    desenharBaseForca(); // já desenha a forca
   }
 
-  function escolherNovaPalavra() {
-    const palavraEscolhida = escolherPalavra();
-    palavraSecreta = palavraEscolhida.palavra;
-    categoriaSecreta = palavraEscolhida.categoria;
-  }
+  btnReiniciar.addEventListener('click', reiniciar);
 
+  // Habilita a captura do teclado somente se o jogo estiver ativo
+  window.addEventListener('keydown', (e) => {
+    if (!/^[A-Z]$/.test(e.key.toUpperCase())) return; // Só aceita A-Z
+    const botoes = letrasContainer.querySelectorAll('button');
+    botoes.forEach(btn => {
+      if (btn.textContent === e.key.toUpperCase() && !btn.disabled) {
+        btn.click();
+      }
+    });
+  });
+
+  // Inicializa o jogo
   embaralharPalavras();
-  escolherNovaPalavra();
-  criarLetras();
-  desenharBaseForca();
-  mostrarPalavra();
-  dicaEl.textContent = `Categoria: ${categoriaSecreta}`;
-
-  btnReiniciar.addEventListener('click', reiniciarJogo);
+  reiniciar();
 })();
