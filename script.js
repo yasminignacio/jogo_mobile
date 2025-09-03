@@ -178,7 +178,7 @@
 
   function mostrarPalavra() {
     let display = palavraSecreta.split('').map(letra => {
-      return letrasCorretas.includes(letra) ? letra : '_';
+      return letrasCorretas.includes(normalizarTexto(letra)) ? letra : '_';
     }).join(' ');
 
     palavraEl.textContent = display;
@@ -211,80 +211,46 @@
       verificarVitoria();
     } else {
       letrasErradas.push(letra);
-      desenharBaseForca();  // sempre desenha a base
       desenharBoneco(letrasErradas.length);
       verificarDerrota();
     }
   }
 
   function verificarVitoria() {
-    const ganhou = palavraSecreta.split('').every(letra => letrasCorretas.includes(letra));
-    if (ganhou) {
-      statusEl.textContent = '🎉 Você ganhou!';
-      bloquearTeclado(true);
-      bloquearBotoes(true);
+    if (palavraSecreta.split('').every(l => letrasCorretas.includes(normalizarTexto(l)))) {
+      statusEl.textContent = 'Você Venceu!';
     }
   }
 
   function verificarDerrota() {
     if (letrasErradas.length >= maxErros) {
-      statusEl.textContent = `💀 Você perdeu! A palavra era: ${palavraSecreta}`;
-      mostrarPalavraCompleta();
-      bloquearTeclado(true);
-      bloquearBotoes(true);
-    } else {
-      statusEl.textContent = `Erros: ${letrasErradas.length} de ${maxErros}`;
+      statusEl.textContent = 'Você Perdeu!';
     }
   }
 
-  function mostrarPalavraCompleta() {
-    palavraEl.textContent = palavraSecreta.split('').join(' ');
-  }
-
-  function bloquearTeclado(bloquear) {
-    if (bloquear) {
-      window.removeEventListener('keydown', onKeydown);
-    } else {
-      window.addEventListener('keydown', onKeydown);
-    }
-  }
-
-  function bloquearBotoes(bloquear) {
-    const botoes = letrasContainer.querySelectorAll('button');
-    botoes.forEach(btn => {
-      btn.disabled = bloquear;
-    });
-  }
-
-  function onKeydown(e) {
-    const letra = e.key.toUpperCase();
-    if (!/^[A-Z]$/.test(letra)) return; // Só letras A-Z
-
-    const botoes = letrasContainer.querySelectorAll('button');
-    botoes.forEach(btn => {
-      if (btn.textContent === letra && !btn.disabled) {
-        btn.click();
-      }
-    });
-  }
-
-  function reiniciar() {
-    const escolhido = escolherPalavra();
-    palavraSecreta = escolhido.palavra;
-    categoriaSecreta = escolhido.categoria;
+  function reiniciarJogo() {
     letrasCorretas = [];
     letrasErradas = [];
-    statusEl.textContent = '';
-    dicaEl.textContent = `Dica: ${categoriaSecreta}`;
-    mostrarPalavra();
+    escolherNovaPalavra();
     criarLetras();
-    desenharBaseForca(); // já desenha a forca
-    bloquearTeclado(false);
+    desenharBaseForca();
+    mostrarPalavra();
+    statusEl.textContent = '';
+    dicaEl.textContent = `Categoria: ${categoriaSecreta}`;
   }
 
-  btnReiniciar.addEventListener('click', reiniciar);
+  function escolherNovaPalavra() {
+    const palavraEscolhida = escolherPalavra();
+    palavraSecreta = palavraEscolhida.palavra;
+    categoriaSecreta = palavraEscolhida.categoria;
+  }
 
-  // Inicializa o jogo
   embaralharPalavras();
-  reiniciar();
+  escolherNovaPalavra();
+  criarLetras();
+  desenharBaseForca();
+  mostrarPalavra();
+  dicaEl.textContent = `Categoria: ${categoriaSecreta}`;
+
+  btnReiniciar.addEventListener('click', reiniciarJogo);
 })();
