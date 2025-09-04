@@ -41,7 +41,7 @@
     { palavra: 'NAVE', categoria: 'Veículo' },
     { palavra: 'CAMPEONATO', categoria: 'Esporte' },
     { palavra: 'CARRINHO', categoria: 'Objeto' },
-    { palavra: 'ANIMAL', categoria: 'Animal' },
+    { palavra: 'GIRAFA', categoria: 'Animal' },
     { palavra: 'PAPEL', categoria: 'Objeto' },
     { palavra: 'VELA', categoria: 'Objeto' },
     { palavra: 'REMEDIO', categoria: 'Produto' },
