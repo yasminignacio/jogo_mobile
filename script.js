@@ -43,13 +43,12 @@
     { palavra: 'CARRINHO', categoria: 'Objeto' },
     { palavra: 'GIRAFA', categoria: 'Animal' },
     { palavra: 'PAPEL', categoria: 'Objeto' },
+     { palavra: 'ESTRELA', categoria: 'Natureza' },
     { palavra: 'VELA', categoria: 'Objeto' },
     { palavra: 'REMEDIO', categoria: 'Produto' },
     { palavra: 'BICICLETA', categoria: 'Veículo' },
     { palavra: 'DRONES', categoria: 'Tecnologia' },
     { palavra: 'XADREZ', categoria: 'Jogo' },
-    { palavra: 'ESTRELA', categoria: 'Natureza' },
-    { palavra: 'FLORA', categoria: 'Natureza' },
     { palavra: 'FAUNA', categoria: 'Natureza' },
     { palavra: 'FERRARI', categoria: 'Marca' },
     { palavra: 'LUMINARIA', categoria: 'Objeto' },
@@ -58,6 +57,7 @@
     { palavra: 'TELEVISAO', categoria: 'Tecnologia' },
     { palavra: 'ROCK', categoria: 'Música' },
     { palavra: 'CLUBE', categoria: 'Lugar' },
+     { palavra: 'FLORA', categoria: 'Natureza' },
   ];
 
   // Embaralha as palavras para evitar repetições consecutivas
